@@ -1,0 +1,215 @@
+.landing-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.hero {
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  color: white;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 1.25rem;
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  opacity: 0.95;
+}
+
+.features {
+  background: white;
+  padding: 4rem 2rem;
+}
+
+.features h2,
+.user-types h2,
+.tools h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: #333;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature-card {
+  background: #f8f9fa;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border: 2px solid #e9ecef;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.feature-card h3 {
+  color: #495057;
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.feature-card p {
+  color: #6c757d;
+  line-height: 1.6;
+}
+
+.user-types {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 4rem 2rem;
+  color: white;
+}
+
+.user-types h2 {
+  color: white;
+}
+
+.user-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.user-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 12px;
+  text-align: center;
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+.user-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.user-card h3 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: #495057;
+}
+
+.user-card p {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.access-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.access-btn:hover {
+  opacity: 0.9;
+}
+
+.tools {
+  background: white;
+  padding: 4rem 2rem;
+}
+
+.tools-list {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.tool-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+
+.tool-item:hover {
+  transform: translateX(10px);
+}
+
+.tool-icon {
+  font-size: 2.5rem;
+  flex-shrink: 0;
+}
+
+.tool-item h4 {
+  color: #495057;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.tool-item p {
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+.landing-footer {
+  background: #2d3748;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .tagline {
+    font-size: 1rem;
+  }
+
+  .features h2,
+  .user-types h2,
+  .tools h2 {
+    font-size: 2rem;
+  }
+
+  .feature-grid,
+  .user-cards {
+    grid-template-columns: 1fr;
+  }
+}
