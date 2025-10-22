@@ -1,0 +1,41 @@
+# Configuration files with sensitive data
+config/database.php
+config/email.php
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Log files
+logs/*.log
+error_log
+*.log
+
+# Temporary files
+tmp/*
+temp/*
+cache/*
+!tmp/.gitkeep
+!cache/.gitkeep
+
+# Uploaded files (if any)
+uploads/*
+!uploads/.gitkeep
+
+# Backup files
+backup/*
+*.sql.gz
+*.sql.bak
+
+# Node modules (if using any build tools)
+node_modules/
+package-lock.json
+
+# Composer (if using)
+vendor/
+composer.lock
