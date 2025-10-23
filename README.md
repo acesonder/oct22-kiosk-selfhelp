@@ -208,9 +208,34 @@ Contributions are welcome! Please follow these guidelines:
 
 This project is open source and available under the [MIT License](LICENSE).
 
+## Documentation
+
+**📚 Comprehensive Documentation Suite Available:**
+
+- **[DOCUMENTATION_INDEX.md](DOCUMENTATION_INDEX.md)** - Start here! Complete navigation guide to all documentation
+- **[WELCOME_GUIDE.md](WELCOME_GUIDE.md)** - Complete user manual for all roles (43K+ characters)
+- **[QUICKSTART_USERS.md](QUICKSTART_USERS.md)** - 5-minute quick start guide
+- **[FAQ.md](FAQ.md)** - 60+ frequently asked questions
+- **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Solutions for 40+ common issues
+- **[FEATURES_GUIDE.md](FEATURES_GUIDE.md)** - Feature configuration for administrators
+- **[INSTALL.md](INSTALL.md)** - Detailed installation and setup instructions
+- **[docs/screenshots/](docs/screenshots/)** - Visual documentation and screenshots
+
+### Quick Links
+
+| I am a... | Start Here |
+|-----------|------------|
+| New User | [QUICKSTART_USERS.md](QUICKSTART_USERS.md) |
+| Having Issues | [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
+| Need Answers | [FAQ.md](FAQ.md) |
+| Administrator | [FEATURES_GUIDE.md](FEATURES_GUIDE.md) |
+
 ## Support
 
-For support, please contact the development team or open an issue on GitHub.
+For support:
+- **Users**: Check [FAQ.md](FAQ.md) and [TROUBLESHOOTING.md](TROUBLESHOOTING.md), then contact your case manager
+- **Administrators**: See [FEATURES_GUIDE.md](FEATURES_GUIDE.md) and [WELCOME_GUIDE.md](WELCOME_GUIDE.md)
+- **Developers**: Contact the development team or open an issue on GitHub
 
 ## Version
 
