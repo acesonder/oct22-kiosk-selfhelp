@@ -45,10 +45,11 @@ try {
     $clientId = $clientResult['id'];
     
     // Create assessment record
-    $assessmentQuery = "INSERT INTO assessments (client_id, assessment_type, status, completed_at) 
-                       VALUES (:client_id, 'intake', 'completed', NOW())";
-    $assessmentId = $db->insert($assessmentQuery, [
-        'client_id' => $clientId
+    $assessmentId = $db->insert('assessments', [
+        'client_id' => $clientId,
+        'assessment_type' => 'intake',
+        'status' => 'completed',
+        'completed_at' => date('Y-m-d H:i:s')
     ]);
     
     if (!$assessmentId) {
@@ -85,11 +86,7 @@ try {
                 $priority = calculatePriority($field, $data[$field]);
                 $priorityScore += $priority;
                 
-                $responseQuery = "INSERT INTO assessment_responses 
-                                 (assessment_id, domain, question_key, response_value, priority_level) 
-                                 VALUES (:assessment_id, :domain, :question_key, :response_value, :priority_level)";
-                
-                $db->insert($responseQuery, [
+                $db->insert('assessment_responses', [
                     'assessment_id' => $assessmentId,
                     'domain' => $domain,
                     'question_key' => $field,
@@ -101,11 +98,7 @@ try {
     }
     
     // Update assessment with priority score
-    $updateQuery = "UPDATE assessments SET priority_score = :score WHERE id = :id";
-    $db->update($updateQuery, [
-        'score' => $priorityScore,
-        'id' => $assessmentId
-    ]);
+    $db->update('assessments', ['priority_score' => $priorityScore], 'id = :id', ['id' => $assessmentId]);
     
     // Auto-create referrals based on high-priority needs
     createAutoReferrals($db, $clientId, $assessmentId, $data, $priorityScore);
@@ -220,21 +213,18 @@ function createAutoReferrals($db, $clientId, $assessmentId, $data, $priorityScor
         $provider = $db->fetch($providerQuery, ['type' => $referral['type']]);
         
         if ($provider) {
-            $referralQuery = "INSERT INTO referrals 
-                             (client_id, provider_id, assessment_id, referral_type, priority, status, notes) 
-                             VALUES (:client_id, :provider_id, :assessment_id, :referral_type, :priority, 'pending', :notes)";
-            
-            $db->insert($referralQuery, [
+            $db->insert('referrals', [
                 'client_id' => $clientId,
                 'provider_id' => $provider['id'],
                 'assessment_id' => $assessmentId,
                 'referral_type' => $referral['type'],
                 'priority' => $referral['priority'],
+                'status' => 'pending',
                 'notes' => 'Auto-generated from intake assessment'
             ]);
             
-            // Update provider load
-            $db->update("UPDATE service_providers SET current_load = current_load + 1 WHERE id = :id", 
+            // Update provider load (using raw SQL for increment)
+            $db->query("UPDATE service_providers SET current_load = current_load + 1 WHERE id = :id", 
                        ['id' => $provider['id']]);
         }
     }
