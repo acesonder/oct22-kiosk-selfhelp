@@ -5,6 +5,7 @@
 
 session_start();
 require_once '../includes/Auth.php';
+require_once '../includes/Database.php';
 
 $auth = new Auth();
 
@@ -14,6 +15,26 @@ if (!$auth->isLoggedIn() || !$auth->hasRole('client')) {
 }
 
 $user = $auth->getCurrentUser();
+$db = Database::getInstance();
+
+// Check if client has completed assessments
+$clientId = $user['client_id'];
+$completedAssessments = [];
+$hasCompletedAssessment = false;
+
+try {
+    $completedAssessments = $db->fetchAll(
+        "SELECT a.*, DATE_FORMAT(a.completed_at, '%M %d, %Y at %h:%i %p') as formatted_date 
+         FROM assessments a 
+         WHERE a.client_id = :client_id 
+         AND a.status = 'completed' 
+         ORDER BY a.completed_at DESC",
+        ['client_id' => $clientId]
+    );
+    $hasCompletedAssessment = count($completedAssessments) > 0;
+} catch (Exception $e) {
+    error_log("Error fetching assessments: " . $e->getMessage());
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +70,68 @@ $user = $auth->getCurrentUser();
                 <p>Help us understand your needs to connect you with the right services</p>
             </div>
 
+            <?php if ($hasCompletedAssessment): ?>
+            <div class="alert alert-success">
+                <p><strong><i class="fas fa-check-circle"></i> Assessment Completed</strong></p>
+                <p>You have completed <?php echo count($completedAssessments); ?> assessment(s). Your most recent assessment was completed on <?php echo htmlspecialchars($completedAssessments[0]['formatted_date']); ?>.</p>
+                <p>Would you like to take another assessment to update your service needs?</p>
+                <div style="margin-top: 1rem;">
+                    <button onclick="showPreviousAssessments()" class="btn btn-secondary">
+                        <i class="fas fa-history"></i> View Previous Assessments
+                    </button>
+                    <button onclick="startNewAssessment()" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Take New Assessment
+                    </button>
+                </div>
+            </div>
+
+            <!-- Previous Assessments Section (hidden by default) -->
+            <div id="previousAssessments" class="card" style="display: none; margin-bottom: 2rem;">
+                <div class="card-header">
+                    <i class="fas fa-history"></i> Previous Assessments
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Date Completed</th>
+                                    <th>Priority Score</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($completedAssessments as $assessment): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($assessment['formatted_date']); ?></td>
+                                    <td>
+                                        <span class="badge badge-<?php echo $assessment['priority_score'] > 15 ? 'error' : ($assessment['priority_score'] > 8 ? 'warning' : 'success'); ?>">
+                                            <?php echo $assessment['priority_score']; ?> points
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success">
+                                            <i class="fas fa-check"></i> Completed
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <a href="view_assessment.php?id=<?php echo $assessment['id']; ?>" class="btn btn-small btn-secondary">
+                                            <i class="fas fa-eye"></i> View Details
+                                        </a>
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Assessment Form (hidden by default when assessments exist) -->
+            <div id="newAssessmentSection" style="display: none;">
+            <?php endif; ?>
+            
             <div class="alert alert-info">
                 <p><strong>Important Information:</strong></p>
                 <p>This comprehensive smart intake assessment will evaluate your needs across multiple areas including housing, food security, healthcare, mental health, employment, legal assistance, transportation, and family services. Based on your responses, we'll assign you tasks and appointments with various service providers in your region based on what you need in life.</p>
@@ -679,11 +762,25 @@ $user = $auth->getCurrentUser();
                     </button>
                 </div>
             </form>
+            
+            <?php if ($hasCompletedAssessment): ?>
+            </div><!-- End new assessment section -->
+            <?php endif; ?>
         </main>
     </div>
 
     <script src="../assets/js/main.js"></script>
     <script>
+        function showPreviousAssessments() {
+            document.getElementById('previousAssessments').style.display = 'block';
+        }
+        
+        function startNewAssessment() {
+            document.getElementById('newAssessmentSection').style.display = 'block';
+            // Scroll to the assessment form
+            document.getElementById('newAssessmentSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
         // Assessment form navigation
         let currentSection = 0;
         const sections = document.querySelectorAll('.assessment-section');
