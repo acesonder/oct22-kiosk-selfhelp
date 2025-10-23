@@ -48,20 +48,25 @@ $user = $auth->getCurrentUser();
                 <p>Empower yourself with tools to manage your journey</p>
             </div>
 
+            <div class="alert alert-success">
+                <p><strong>Budget Planner is Now Available!</strong></p>
+                <p>The Budget Planner tool is ready to use. Click on it above to start tracking your income and expenses.</p>
+            </div>
+            
             <div class="alert alert-info">
-                <p><strong>Self-Help Tools coming soon!</strong></p>
-                <p>These interactive tools will help you manage various aspects of your life and track your progress.</p>
+                <p><strong>Additional Self-Help Tools Coming Soon!</strong></p>
+                <p>The remaining tools are currently in development and will be available in future updates.</p>
             </div>
 
             <div class="action-grid">
-                <div class="action-card">
+                <a href="tools/budget.php" class="action-card">
                     <i class="fas fa-calculator"></i>
                     <h3>Budget Planner</h3>
                     <p>Track your income and expenses to manage your finances effectively</p>
                     <div style="margin-top: 1rem;">
-                        <span class="badge badge-warning">Coming Soon</span>
+                        <span class="badge badge-success">Available</span>
                     </div>
-                </div>
+                </a>
 
                 <div class="action-card">
                     <i class="fas fa-search-location"></i>

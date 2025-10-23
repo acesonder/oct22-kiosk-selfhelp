@@ -55,5 +55,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <span>My Profile</span>
             </a>
         </li>
+        <li class="<?php echo $currentPage === 'settings.php' ? 'active' : ''; ?>">
+            <a href="settings.php">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
     </ul>
 </aside>
